@@ -1,0 +1,11 @@
+*terraform*
+terraform.*
+.terraform.*
+.*tfstate
+.project
+.idea/*
+hyperlane-terraform.iml
+.DS_Store
+output-plan*/*
+logs*/*
+
