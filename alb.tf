@@ -11,7 +11,7 @@ module "aws_alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "5.8.0"
 
-  name = "${var.name}-lb"
+  name                = "${var.name}-lb"
   load_balancer_type  = "application"
   internal            = true
   security_groups     = var.lb_security_group_ids

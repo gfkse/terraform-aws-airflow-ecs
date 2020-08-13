@@ -6,7 +6,7 @@
       "secretOptions": null,
       "options": {
         "awslogs-group": "/ecs/${name}",
-        "awslogs-region": "eu-central-1",
+        "awslogs-region": "${region}",
         "awslogs-stream-prefix": "ecs"
       }
     },
@@ -113,7 +113,7 @@
       "secretOptions": null,
       "options": {
         "awslogs-group": "/ecs/${name}",
-        "awslogs-region": "eu-central-1",
+        "awslogs-region": "${region}",
         "awslogs-stream-prefix": "ecs"
       }
     },
@@ -205,7 +205,7 @@
       "secretOptions": null,
       "options": {
         "awslogs-group": "/ecs/${name}",
-        "awslogs-region": "eu-central-1",
+        "awslogs-region": "${region}",
         "awslogs-stream-prefix": "ecs"
       }
     },

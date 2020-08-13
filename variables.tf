@@ -1,6 +1,7 @@
-# ### General ###
+### general
 variable "name" {
-  description = "Used for ecs cluster and service names as prefix; for lc and asg as suffix; for rds and elsticache `Name` tag. Should be in kebab-case."
+  type        = string
+  description = "Used for ecs cluster and service names as prefix; for lc and asg as suffix; for rds and elasticache `Name` tag. Should be in kebab-case."
   default     = "airflow" # kebab-case, with dashes
 }
 
@@ -8,24 +9,21 @@ locals {
   rds_name = join("", split(" ", title(join(" ", split("-", var.name)))))  # it converts kebab-case to PascalCase
 }
 
-variable "vpc_id" {
-  description = "ID of VPC, where rds, elasticache, alb and ecs cluster will reside."
+variable "region" {
+  type        = string
+  description = "Region, where Airflow should be spinned up."
+  default     = "eu-central-1"
 }
 
-# variable "availability_zone" {
-#   type        = "list"
-#   description = "List of AZ of the setup"
-# }
+variable "vpc_id" {
+  type        = string
+  description = "ID of VPC, where rds, elasticache, alb and ecs cluster will reside."
+}
 
 variable "private_subnet_ids" {
   type        = list(string)
   description = "The VPC's private Subnet IDs, where rds, elasticache, alb and ecs cluster will reside."
 }
-
-# variable "public_subnet_ids" {
-#   type        = "list"
-#   description = "The VPC's public Subnet IDs"
-# }
 
 variable "tags" {
   type        = map(string)
@@ -33,33 +31,56 @@ variable "tags" {
   default     = {}
 }
 
-# variable "environment_long" {
-#   description = "Long enviroment name used for Puppet Hiera lookup"
-# }
-
-# variable "environment_short" {
-#   description = "Short enviroment name, used in names of some resources"
-# }
-
 variable "certificate_domain_name" {
   type        = string
   description = "'Domain_name' by which to search for certificate."
 }
-
-# variable "domain" {
-#   description = "Domain of Instance"
-# }
-
-# variable "dns_zone_id" {
-#   description = "DNS zone ID used for this instance"
-# }
 
 variable "dns_zone_id" {
   type        = string
   description = "Route53 hosted zone id. Belongs to a DNS zone where AirFlow should reside."
 }
 
-# RDS
+### secrets
+variable "airflow_image_version" {
+  type        = string
+  description = "Docker image name to use in the task definition `templates/airflow.json`."
+  default     = "puckel/docker-airflow:1.10.9"
+}
+
+variable "rclone_secret_key" {
+  type        = string
+  description = "A key used to copy DAGs from the bucket to container instance."
+}
+
+variable "airflow_fernet_key" {
+  type        = string
+  description = "A key used to encrypt connection's passwords in AF metadata database."
+}
+
+### user_data
+variable "rclone_secret_key_id" {
+  type        = string
+  description = "A key_id used to copy DAGs from the bucket to container instance."
+}
+
+variable "dag_s3_bucket" {
+  type        = string
+  description = "A bucket where DAGs are stored."
+}
+
+variable "dag_s3_key" {
+  type        = string
+  description = "A path to folder in the bucket where DAGs are stored."
+}
+
+variable "custom_user_data" {
+  type        = string
+  description = "user_data extention for container instance."
+  default     = ""
+}
+
+### RDS
 variable "rds_security_group_ids" {
   type        = list(string)
   description = "A list of security group IDs to associate with."
@@ -88,7 +109,7 @@ variable "rds_airflow_docker_password" {
   description = "Database password for postgres."
 }
 
-### Airflow Docker Elasticache
+### elasticache
 
 variable "elasticache_airflow_docker_node_type" {
   type        = string
@@ -96,7 +117,7 @@ variable "elasticache_airflow_docker_node_type" {
   default     = "cache.t2.micro"
 }
 
-### alb stuff
+### alb
 variable "lb_security_group_ids" {
   type        = list(any)
   description = "A list of security group IDs to associate with Load Balancer."
@@ -125,7 +146,7 @@ variable "alb_access_logs_bucket" {
   description = "An s3 bucket, where to store logs from alb."
 }
 
-### ecs_service stuff
+### ecs_service
 variable "ecs_airflow_docker_security_group_id" {
   type        = list(any)
   description = "SG for ecs task_defition (elastic network interface)."
@@ -137,19 +158,7 @@ variable "ecs_airflow_docker_desired_count" {
   default     = "1"
 }
 
-# variable "ecs_airflow_docker_instance_iam_role_arn" {
-#   description = "arn for ec2 instance to get"
-# }
-
-# variable "airflow_task_definition_execution_role_arn" {
-#   description = "airflow task definition execution role arn"
-# }
-
-# variable "instance_iam_role_arn" {
-#   description = "EC2 Instance IAM ROLE to be spawned by autoscaling group from ecs"
-# }
-
-### launch_configuration stuff
+### launch_configuration
 variable "key_name" {
   type        = string
   description = "EC2 Instance key."
@@ -191,14 +200,7 @@ variable "ecs_airflow_docker_instance_type" {
   default     = "t2.medium"
 }
 
-### template_file stuff
-variable "custom_user_data" {
-  type        = string
-  description = "user_data extention for container instance."
-  default     = ""
-}
-
-### task_definition stuff
+### task_definition
 variable "task_definition_family" {
   type        = string
   default     = "airflow"

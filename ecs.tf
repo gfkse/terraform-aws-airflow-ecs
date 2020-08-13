@@ -65,14 +65,15 @@ resource "aws_ecs_task_definition" "airflow" {
 data "template_file" "airflow" {
   template = file("${path.module}/templates/airflow.json")
   vars = {
-    airflow_docker_rds_instance_endpoint     = aws_db_instance.this.address
-    rds_airflow_docker_username              = var.rds_airflow_docker_username
-    rds_airflow_docker_password              = var.rds_airflow_docker_password
-    rds_airflow_docker_db_name               = local.rds_name
-    name                                     = var.name
-    airflow_docker_elasticache_cache_host    = aws_elasticache_cluster.this.cache_nodes[0].address
-    airflow_docker_image                     = "puckel/docker-airflow:1.10.9"
-    fernet_key                               = "<FERNET_KEY>"
+    airflow_docker_rds_instance_endpoint      = aws_db_instance.this.address
+    rds_airflow_docker_username               = var.rds_airflow_docker_username
+    rds_airflow_docker_password               = var.rds_airflow_docker_password
+    rds_airflow_docker_db_name                = local.rds_name
+    name                                      = var.name
+    airflow_docker_elasticache_cache_host     = aws_elasticache_cluster.this.cache_nodes[0].address
+    airflow_docker_image                      = var.airflow_image_version
+    fernet_key                                = var.airflow_fernet_key
+    region                                    = var.region
   }
 }
 
@@ -80,18 +81,23 @@ data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.sh")
 
   vars = {
-    cluster_name      = "${var.name}-cluster"
-    custom_user_data  = var.custom_user_data
+    cluster_name          = "${var.name}-cluster"
+    dag_s3_bucket         = var.dag_s3_bucket
+    dag_s3_key            = var.dag_s3_key
+    rclone_secret_key_id  = var.rclone_secret_key_id
+    rclone_secret_key     = var.rclone_secret_key
+    region                = var.region
+    custom_user_data      = var.custom_user_data
   }
 }
 
 resource "aws_launch_configuration" "ecs" {
-  name_prefix          = "lc-${var.name}"
-  image_id             = var.ecs_airflow_docker_ami_id
-  instance_type        = var.ecs_airflow_docker_instance_type
-  user_data            = data.template_file.user_data.rendered
-  key_name             = var.key_name
-  iam_instance_profile = aws_iam_instance_profile.airflow-task-definition-execution-profile.name
+  name_prefix           = "lc-${var.name}"
+  image_id              = var.ecs_airflow_docker_ami_id
+  instance_type         = var.ecs_airflow_docker_instance_type
+  user_data             = data.template_file.user_data.rendered
+  key_name              = var.key_name
+  iam_instance_profile  = aws_iam_instance_profile.airflow-task-definition-execution-profile.name
 
   ebs_block_device {
     device_name           = var.ebs_block_device_name
