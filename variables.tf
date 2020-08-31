@@ -41,8 +41,7 @@ variable "tags" {
 #   description = "Short enviroment name, used in names of some resources"
 # }
 
-# TODO(ilya_isakov): could be obtained with data source and `public_dns_zone_id`
-variable "domain_name" {
+variable "certificate_domain_name" {
   type        = string
   description = "'Domain_name' by which to search for certificate."
 }
@@ -55,7 +54,7 @@ variable "domain_name" {
 #   description = "DNS zone ID used for this instance"
 # }
 
-variable "public_dns_zone_id" {
+variable "dns_zone_id" {
   type        = string
   description = "Route53 hosted zone id. Belongs to a DNS zone where AirFlow should reside."
 }
@@ -121,6 +120,10 @@ variable "lb_target_container_port" {
   default     = "8080"
 }
 
+variable "alb_access_logs_bucket" {
+  type        = string
+  description = "An s3 bucket, where to store logs from alb."
+}
 
 ### ecs_service stuff
 variable "ecs_airflow_docker_security_group_id" {
