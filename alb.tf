@@ -21,6 +21,7 @@ module "aws_alb" {
 
   access_logs = {
     bucket = var.alb_access_logs_bucket
+    prefix = "alb/${var.name}-lb"
   }
 
   target_groups = [
