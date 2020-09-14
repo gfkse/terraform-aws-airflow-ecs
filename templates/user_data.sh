@@ -2,6 +2,9 @@
 
 echo "ECS_CLUSTER=${cluster_name}" >> /etc/ecs/ecs.config
 
+mkdir -p '/home/ec2-user/airflow/dags'
+chown -R ec2-user:ec2-user '/home/ec2-user/airflow'
+
 sudo yum -y install unzip curl
 curl https://rclone.org/install.sh | sudo bash
 

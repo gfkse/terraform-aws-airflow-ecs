@@ -29,10 +29,11 @@ resource "aws_ecs_service" "this" {
     container_port   = var.lb_target_container_port
   }
 
-  placement_constraints {
-    type       = "memberOf"
-    expression = "attribute:ecs.availability-zone in [eu-central-1a, eu-central-1b]"
-  }
+  # TODO(ilya_isakov): add placement constraint to a variable
+  # placement_constraints {
+  #   type       = "memberOf"
+  #   expression = "attribute:ecs.availability-zone in [eu-central-1a, eu-central-1b]"
+  # }
 
   network_configuration {
     subnets         = var.private_subnet_ids
