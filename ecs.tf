@@ -60,6 +60,11 @@ resource "aws_ecs_task_definition" "airflow" {
     host_path = "/home/ec2-user/airflow/dags"
   }
 
+  volume {
+    name      = "logs"
+    host_path = "/home/ec2-user/airflow/logs"
+  }
+
   tags        = var.tags
 }
 

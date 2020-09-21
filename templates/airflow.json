@@ -168,6 +168,11 @@
         "sourceVolume": "dags"
       },
       {
+        "readOnly": false,
+        "containerPath": "/usr/local/airflow/logs",
+        "sourceVolume": "logs"
+      },
+      {
         "readOnly": null,
         "containerPath": "/requirements.txt",
         "sourceVolume": "requirements"
