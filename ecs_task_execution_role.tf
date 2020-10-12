@@ -1,5 +1,3 @@
-# TODO(ilya_isakov): this whole thing could probably be replaced by public ECS module
-
 data "aws_iam_policy_document" "instance-assume-role-policy" {
   statement {
     actions = ["sts:AssumeRole"]
@@ -20,6 +18,12 @@ resource "aws_iam_role" "airflow-task-definition-execution-role" {
 resource "aws_iam_role_policy_attachment" "airflow-task-definition-execution-role-policy-attachment" {
   role       = aws_iam_role.airflow-task-definition-execution-role.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonEC2ContainerServiceforEC2Role"  # it is aws managed policy with ugly name
+}
+
+# Enable access to System Manager
+resource "aws_iam_role_policy_attachment" "system-manager-policy-attachment" {
+  role       = aws_iam_role.airflow-task-definition-execution-role.name
+  policy_arn = "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore"
 }
 
 resource "aws_iam_instance_profile" "airflow-task-definition-execution-profile" {

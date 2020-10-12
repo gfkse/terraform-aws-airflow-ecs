@@ -1,6 +1,7 @@
 resource "aws_elasticache_cluster" "this" {
   cluster_id           = var.name
   engine               = "redis"
+  engine_version       = "5.0.5"
   node_type            = var.elasticache_airflow_docker_node_type
   num_cache_nodes      = 1
   parameter_group_name = aws_elasticache_parameter_group.this.name

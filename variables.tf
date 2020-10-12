@@ -41,6 +41,12 @@ variable "dns_zone_id" {
   description = "Route53 hosted zone id. Belongs to a DNS zone where AirFlow should reside."
 }
 
+variable "airflow_core_logging_level" {
+  type        = string
+  description = "Webserver logging level."
+  default     = "INFO"
+}
+
 ### secrets
 variable "airflow_image_version" {
   type        = string
@@ -191,7 +197,7 @@ variable "ebs_block_device_delete_on_termination" {
 variable "ecs_airflow_docker_ami_id" {
   type        = string
   description = "ECS container instance ami."
-  default     = "ami-042ae7188819e7e9b"
+  default     = "ami-08c1d0b4f39f110d4"
 }
 
 variable "ecs_airflow_docker_instance_type" {

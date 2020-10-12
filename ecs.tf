@@ -7,15 +7,6 @@ resource "aws_ecs_cluster" "this" {
   tags = var.tags
 }
 
-# TODO(ilya_isakov): try ecs module instead of resource. To be checked: it could have roles for service, ecs, etc.
-# module "airflow-docker-ecs" {
-#   source  = "terraform-aws-modules/ecs/aws"
-#   version = "2.0.0"
-#
-#   name       = "${var.name}-cluster"
-#   tags       = var.tags
-# }
-
 resource "aws_ecs_service" "this" {
   name                = "${var.name}-service"
   cluster             = aws_ecs_cluster.this.id  # module.airflow-docker-ecs.this_ecs_cluster_id  #
@@ -80,6 +71,7 @@ data "template_file" "airflow" {
     airflow_docker_image                      = var.airflow_image_version
     fernet_key                                = var.airflow_fernet_key
     region                                    = var.region
+    airflow_core_logging_level                = var.airflow_core_logging_level
   }
 }
 

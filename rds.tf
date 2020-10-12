@@ -2,7 +2,7 @@ resource "aws_db_instance" "this" {
   allocated_storage         = var.rds_airflow_docker_storage
   storage_type              = "gp2"
   engine                    = "postgres"
-  engine_version            = "10.6"
+  engine_version            = "10.13"
   instance_class            = var.rds_airflow_docker_instance_class
   name                      = local.rds_name  # this is not a Name tag for resouce, this is a name of db
   identifier                = "rds-${var.name}"

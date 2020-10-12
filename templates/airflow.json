@@ -55,6 +55,10 @@
       {
         "name": "REDIS_HOST",
         "value": "${airflow_docker_elasticache_cache_host}"
+      },
+      {
+        "name": "AIRFLOW__CORE__LOGGING_LEVEL",
+        "value": "${airflow_core_logging_level}"
       }
     ],
     "resourceRequirements": null,
