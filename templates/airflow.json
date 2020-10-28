@@ -37,24 +37,32 @@
         "value": "n"
       },
       {
-        "name": "POSTGRES_DB",
-        "value": "${rds_airflow_docker_db_name}"
-      },
-      {
-        "name": "POSTGRES_HOST",
-        "value": "${airflow_docker_rds_instance_endpoint}"
-      },
-      {
-        "name": "POSTGRES_PASSWORD",
-        "value": "${rds_airflow_docker_password}"
-      },
-      {
-        "name": "POSTGRES_USER",
-        "value": "${rds_airflow_docker_username}"
-      },
-      {
         "name": "REDIS_HOST",
         "value": "${airflow_docker_elasticache_cache_host}"
+      },
+      {
+        "name": "AIRFLOW__WEBSERVER__RBAC",
+        "value": "True"
+      },
+      {
+        "name": "AIRFLOW__CORE__DAG_CONCURRENCY",
+        "value": "32"
+      },
+      {
+        "name": "AIRFLOW__CORE__WORKER_CONCURRENCY",
+        "value": "32"
+      },
+      {
+        "name":"AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS",
+        "value":"False"
+      },
+      {
+        "name":"AIRFLOW__CORE__SQL_ALCHEMY_CONN",
+        "value":"postgresql+psycopg2://${rds_airflow_docker_username}:${rds_airflow_docker_password}@${airflow_docker_rds_instance_endpoint}/${rds_airflow_docker_db_name}"
+      },
+      {
+        "name":"AIRFLOW__CELERY__RESULT_BACKEND",
+        "value":"db+postgresql://${rds_airflow_docker_username}:${rds_airflow_docker_password}@${airflow_docker_rds_instance_endpoint}/${rds_airflow_docker_db_name}"
       },
       {
         "name": "AIRFLOW__CORE__LOGGING_LEVEL",
@@ -69,6 +77,11 @@
         "readOnly": true,
         "containerPath": "/usr/local/airflow/dags",
         "sourceVolume": "dags"
+      },
+      {
+        "readOnly": true,
+        "containerPath": "${airflow_home}/webserver_config.py",
+        "sourceVolume": "webserver_config"
       },
       {
         "readOnly": null,
@@ -142,24 +155,40 @@
         "value": "n"
       },
       {
-        "name": "POSTGRES_DB",
-        "value": "${rds_airflow_docker_db_name}"
-      },
-      {
-        "name": "POSTGRES_HOST",
-        "value": "${airflow_docker_rds_instance_endpoint}"
-      },
-      {
-        "name": "POSTGRES_PASSWORD",
-        "value": "${rds_airflow_docker_password}"
-      },
-      {
-        "name": "POSTGRES_USER",
-        "value": "${rds_airflow_docker_username}"
-      },
-      {
         "name": "REDIS_HOST",
         "value": "${airflow_docker_elasticache_cache_host}"
+      },
+      {
+        "name": "AIRFLOW__WEBSERVER__RBAC",
+        "value": "True"
+      },
+      {
+        "name": "AIRFLOW__CORE__DAG_CONCURRENCY",
+        "value": "32"
+      },
+      {
+        "name": "AIRFLOW__CORE__WORKER_CONCURRENCY",
+        "value": "32"
+      },
+      {
+        "name":"AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS",
+        "value":"False"
+      },
+      {
+        "name":"AIRFLOW__CORE__SQL_ALCHEMY_CONN",
+        "value":"postgresql+psycopg2://${rds_airflow_docker_username}:${rds_airflow_docker_password}@${airflow_docker_rds_instance_endpoint}/${rds_airflow_docker_db_name}"
+      },
+      {
+        "name":"AIRFLOW__CELERY__RESULT_BACKEND",
+        "value":"db+postgresql://${rds_airflow_docker_username}:${rds_airflow_docker_password}@${airflow_docker_rds_instance_endpoint}/${rds_airflow_docker_db_name}"
+      },
+      {
+        "name":"AIRFLOW__CORE__LOGGING_LEVEL",
+        "value":"DEBUG"
+      },
+      {
+        "name":"AIRFLOW__WEBSERVER__DAG_ORIENTATION",
+        "value":"TB"
       }
     ],
     "resourceRequirements": null,
@@ -239,24 +268,36 @@
         "value": "n"
       },
       {
-        "name": "POSTGRES_DB",
-        "value": "${rds_airflow_docker_db_name}"
-      },
-      {
-        "name": "POSTGRES_HOST",
-        "value": "${airflow_docker_rds_instance_endpoint}"
-      },
-      {
-        "name": "POSTGRES_PASSWORD",
-        "value": "${rds_airflow_docker_password}"
-      },
-      {
-        "name": "POSTGRES_USER",
-        "value": "${rds_airflow_docker_username}"
-      },
-      {
         "name": "REDIS_HOST",
         "value": "${airflow_docker_elasticache_cache_host}"
+      },
+      {
+        "name": "AIRFLOW__WEBSERVER__RBAC",
+        "value": "True"
+      },
+      {
+        "name": "AIRFLOW__CORE__DAG_CONCURRENCY",
+        "value": "32"
+      },
+      {
+        "name": "AIRFLOW__CORE__WORKER_CONCURRENCY",
+        "value": "32"
+      },
+      {
+        "name":"AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS",
+        "value":"False"
+      },
+      {
+        "name":"AIRFLOW__CORE__SQL_ALCHEMY_CONN",
+        "value":"postgresql+psycopg2://${rds_airflow_docker_username}:${rds_airflow_docker_password}@${airflow_docker_rds_instance_endpoint}/${rds_airflow_docker_db_name}"
+      },
+      {
+        "name":"AIRFLOW__CELERY__RESULT_BACKEND",
+        "value":"db+postgresql://${rds_airflow_docker_username}:${rds_airflow_docker_password}@${airflow_docker_rds_instance_endpoint}/${rds_airflow_docker_db_name}"
+      },
+      {
+        "name":"AIRFLOW__CORE__LOGGING_LEVEL",
+        "value":"DEBUG"
       }
     ],
     "resourceRequirements": null,

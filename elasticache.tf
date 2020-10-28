@@ -21,7 +21,7 @@ resource "aws_elasticache_parameter_group" "this" {
   family = "redis5.0"
 
   parameter {
-      name  = "activerehashing"
-      value = "yes"
+    name  = "activerehashing"
+    value = "yes"
   }
 }

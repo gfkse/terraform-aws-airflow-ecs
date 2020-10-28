@@ -9,7 +9,7 @@ resource "aws_ecs_cluster" "this" {
 
 resource "aws_ecs_service" "this" {
   name                = "${var.name}-service"
-  cluster             = aws_ecs_cluster.this.id  # module.airflow-docker-ecs.this_ecs_cluster_id  #
+  cluster             = aws_ecs_cluster.this.id # module.airflow-docker-ecs.this_ecs_cluster_id  #
   task_definition     = aws_ecs_task_definition.airflow.arn
   desired_count       = var.ecs_airflow_docker_desired_count
   scheduling_strategy = "REPLICA"
@@ -33,13 +33,13 @@ resource "aws_ecs_service" "this" {
 }
 
 resource "aws_ecs_task_definition" "airflow" {
-  family                    = var.task_definition_family
-  container_definitions     = data.template_file.airflow.rendered
-  memory                    = var.task_definition_memory
-  cpu                       = var.task_definition_cpu
-  network_mode              = var.task_definition_network_mode
+  family                = var.task_definition_family
+  container_definitions = data.template_file.airflow.rendered
+  memory                = var.task_definition_memory
+  cpu                   = var.task_definition_cpu
+  network_mode          = var.task_definition_network_mode
   # execution_role_arn        = var.airflow_task_definition_execution_role_arn
-  requires_compatibilities  = ["EC2"]
+  requires_compatibilities = ["EC2"]
 
   volume {
     name      = "requirements"
@@ -56,13 +56,18 @@ resource "aws_ecs_task_definition" "airflow" {
     host_path = "/home/ec2-user/airflow/logs"
   }
 
-  tags        = var.tags
+  volume {
+    name      = "webserver_config"
+    host_path = "/home/ec2-user/airflow/webserver_config.py"
+  }
+
+  tags = var.tags
 }
 
 data "template_file" "airflow" {
   template = file("${path.module}/templates/airflow.json")
   vars = {
-    airflow_docker_rds_instance_endpoint      = aws_db_instance.this.address
+    airflow_docker_rds_instance_endpoint      = aws_db_instance.this.endpoint
     rds_airflow_docker_username               = var.rds_airflow_docker_username
     rds_airflow_docker_password               = var.rds_airflow_docker_password
     rds_airflow_docker_db_name                = local.rds_name
@@ -71,6 +76,7 @@ data "template_file" "airflow" {
     airflow_docker_image                      = var.airflow_image_version
     fernet_key                                = var.airflow_fernet_key
     region                                    = var.region
+    airflow_home                              = var.airflow_home
     airflow_core_logging_level                = var.airflow_core_logging_level
   }
 }
@@ -79,23 +85,30 @@ data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.sh")
 
   vars = {
-    cluster_name          = "${var.name}-cluster"
-    dag_s3_bucket         = var.dag_s3_bucket
-    dag_s3_key            = var.dag_s3_key
-    rclone_secret_key_id  = var.rclone_secret_key_id
-    rclone_secret_key     = var.rclone_secret_key
-    region                = var.region
-    custom_user_data      = var.custom_user_data
+    cluster_name         = "${var.name}-cluster"
+    dag_s3_bucket        = var.dag_s3_bucket
+    dag_s3_key           = var.dag_s3_key
+    rclone_secret_key_id = var.rclone_secret_key_id
+    rclone_secret_key    = var.rclone_secret_key
+    region               = var.region
+    custom_user_data     = var.custom_user_data
+    airflow_home         = var.airflow_home
   }
 }
 
+data "aws_ecs_container_definition" "ecs_airflow" {
+  task_definition = aws_ecs_task_definition.airflow.id
+  container_name  = var.lb_target_container_name
+}
+
+
 resource "aws_launch_configuration" "ecs" {
-  name_prefix           = "lc-${var.name}"
-  image_id              = var.ecs_airflow_docker_ami_id
-  instance_type         = var.ecs_airflow_docker_instance_type
-  user_data             = data.template_file.user_data.rendered
-  key_name              = var.key_name
-  iam_instance_profile  = aws_iam_instance_profile.airflow-task-definition-execution-profile.name
+  name_prefix          = "lc-${var.name}"
+  image_id             = var.ecs_airflow_docker_ami_id
+  instance_type        = var.ecs_airflow_docker_instance_type
+  user_data            = data.template_file.user_data.rendered
+  key_name             = var.key_name
+  iam_instance_profile = aws_iam_instance_profile.airflow-task-definition-execution-profile.name
 
   ebs_block_device {
     device_name           = var.ebs_block_device_name

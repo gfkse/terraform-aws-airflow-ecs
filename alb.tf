@@ -11,13 +11,13 @@ module "aws_alb" {
   source  = "terraform-aws-modules/alb/aws"
   version = "5.8.0"
 
-  name                = "${var.name}-lb"
-  load_balancer_type  = "application"
-  internal            = true
-  security_groups     = var.lb_security_group_ids
-  idle_timeout        = var.lb_idle_timeout
-  vpc_id              = var.vpc_id
-  subnets             = var.private_subnet_ids
+  name               = "${var.name}-lb"
+  load_balancer_type = "application"
+  internal           = true
+  security_groups    = var.lb_security_group_ids
+  idle_timeout       = var.lb_idle_timeout
+  vpc_id             = var.vpc_id
+  subnets            = var.private_subnet_ids
 
   access_logs = {
     bucket = var.alb_access_logs_bucket
@@ -26,10 +26,10 @@ module "aws_alb" {
 
   target_groups = [
     {
-      name_prefix                 = "tg-"
-      backend_protocol            = "HTTP"
-      backend_port                = var.lb_target_container_port
-      target_type                 = "ip"
+      name_prefix      = "tg-"
+      backend_protocol = "HTTP"
+      backend_port     = var.lb_target_container_port
+      target_type      = "ip"
       health_check = {
         enabled             = true
         interval            = 30
@@ -59,8 +59,8 @@ module "aws_alb" {
       protocol    = "HTTP"
       action_type = "redirect"
       redirect = {
-        port = "443"
-        protocol = "HTTPS"
+        port        = "443"
+        protocol    = "HTTPS"
         status_code = "HTTP_301"
       }
     }

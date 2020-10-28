@@ -28,3 +28,4 @@ output "target_group_arn" {
   description = "ARN of the target group. Useful for passing to your Auto Scaling group module."
   value       = element(module.aws_alb.target_group_arns, 0)
 }
+

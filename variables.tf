@@ -6,7 +6,7 @@ variable "name" {
 }
 
 locals {
-  rds_name = join("", split(" ", title(join(" ", split("-", var.name)))))  # it converts kebab-case to PascalCase
+  rds_name = join("", split(" ", title(join(" ", split("-", var.name))))) # it converts kebab-case to PascalCase
 }
 
 variable "region" {
@@ -45,6 +45,12 @@ variable "airflow_core_logging_level" {
   type        = string
   description = "Webserver logging level."
   default     = "INFO"
+}
+
+variable "airflow_home" {
+  type        = string
+  description = "Given is where airflow code base resides."
+  default     = "/home/ec2-user/airflow"
 }
 
 ### secrets
@@ -208,8 +214,8 @@ variable "ecs_airflow_docker_instance_type" {
 
 ### task_definition
 variable "task_definition_family" {
-  type        = string
-  default     = "airflow"
+  type    = string
+  default = "airflow"
 }
 
 variable "task_definition_memory" {
@@ -221,9 +227,9 @@ variable "task_definition_memory" {
 variable "task_definition_cpu" {
   type        = string
   description = "Desired task definition cpu."
-  default     = 1024
+  default     = 1024 # 1 core
 }
 
 variable "task_definition_network_mode" {
-  default     = "awsvpc"
+  default = "awsvpc"
 }
