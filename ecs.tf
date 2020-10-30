@@ -40,25 +40,20 @@ resource "aws_ecs_task_definition" "airflow" {
   network_mode          = var.task_definition_network_mode
   # execution_role_arn        = var.airflow_task_definition_execution_role_arn
   requires_compatibilities = ["EC2"]
-
+  
   volume {
     name      = "requirements"
-    host_path = "/home/ec2-user/airflow/docker/requirements.txt"
+    host_path =  "${var.airflow_home}/docker/requirements.txt"
   }
 
   volume {
     name      = "dags"
-    host_path = "/home/ec2-user/airflow/dags"
+    host_path = "${var.airflow_home}/dags"
   }
 
   volume {
     name      = "logs"
-    host_path = "/home/ec2-user/airflow/logs"
-  }
-
-  volume {
-    name      = "webserver_config"
-    host_path = "/home/ec2-user/airflow/webserver_config.py"
+    host_path = "${var.airflow_home}/logs"
   }
 
   tags = var.tags

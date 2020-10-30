@@ -79,11 +79,6 @@
         "sourceVolume": "dags"
       },
       {
-        "readOnly": true,
-        "containerPath": "${airflow_home}/webserver_config.py",
-        "sourceVolume": "webserver_config"
-      },
-      {
         "readOnly": null,
         "containerPath": "/requirements.txt",
         "sourceVolume": "requirements"
@@ -189,6 +184,10 @@
       {
         "name":"AIRFLOW__WEBSERVER__DAG_ORIENTATION",
         "value":"TB"
+      },
+      {
+        "name":"AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL",
+        "value":"30"
       }
     ],
     "resourceRequirements": null,

@@ -37,15 +37,4 @@ region = ${region}
 location_constraint = EU
 EOT
 
-
-cat << EOT >> '${airflow_home}/config/webserver_config.py'
-import os
-from airflow import configuration as conf
-from flask_appbuilder.security.manager import AUTH_DB
-basedir = os.path.abspath(os.path.dirname(__file__))
-SQLALCHEMY_DATABASE_URI = conf.get('core', 'SQL_ALCHEMY_CONN')
-CSRF_ENABLED = True
-AUTH_TYPE = AUTH_DB
-EOT
-
 ${custom_user_data}
