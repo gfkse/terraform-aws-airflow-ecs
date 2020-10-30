@@ -80,6 +80,11 @@ data "template_file" "airflow" {
     airflow_core_load_default_connections     = var.airflow_core_load_default_connections
     airflow_webserver_dag_orientation         = var.airflow_webserver_dag_orientation
     airflow_scheduler_dag_dir_list_interval   = var.airflow_scheduler_dag_dir_list_interval
+      airflow_smtp_host	                      = var.airflow_smtp_host
+    airflow_smtp_port                         = var.airflow_smtp_port
+    airflow_smtp_user                         = var.airflow_smtp_user
+    airflow_smtp_password                     = var.airflow_smtp_password
+    airflow_smtp_mail_from                    = var.airflow_smtp_mail_from
   }
 }
 
@@ -95,7 +100,7 @@ data "template_file" "user_data" {
     region                  = var.region
     custom_user_data        = var.custom_user_data
     airflow_home            = var.airflow_home
-    airflow_webserver_rbac  = var.airflow_webserver_rbac
+    airflow_webserver_rbac  = var.airflow_webserver_rbac # TODO: is that really used in template?
   }
 }
 

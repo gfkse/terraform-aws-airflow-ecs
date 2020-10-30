@@ -41,6 +41,13 @@ variable "dns_zone_id" {
   description = "Route53 hosted zone id. Belongs to a DNS zone where AirFlow should reside."
 }
 
+variable "airflow_home" {
+  type        = string
+  description = "Given is where airflow code base resides."
+  default     = "/home/ec2-user/airflow"
+}
+
+# Env variables for airflow.cfg
 variable "airflow_core_logging_level" {
   type        = string
   description = "Webserver logging level."
@@ -89,10 +96,24 @@ variable "airflow_scheduler_dag_dir_list_interval" {
   default     = "180"
 }
 
-variable "airflow_home" {
+variable "airflow_smtp_host" {
   type        = string
-  description = "Given is where airflow code base resides."
-  default     = "/home/ec2-user/airflow"
+}
+
+variable "airflow_smtp_port" {
+  type        = string
+}
+
+variable "airflow_smtp_user" {
+  type        = string
+}
+
+variable "airflow_smtp_password" {
+  type        = string
+}
+
+variable "airflow_smtp_mail_from" {
+  type        = string
 }
 
 ### secrets

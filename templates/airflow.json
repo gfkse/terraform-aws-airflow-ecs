@@ -289,6 +289,26 @@
       {
         "name": "AIRFLOW__CORE__LOGGING_LEVEL",
         "value": "${airflow_core_logging_level}"
+      },
+      {
+        "name": "AIRFLOW__SMTP__SMTP_HOST",
+        "value": "${airflow_smtp_host}"
+      },
+      {
+        "name": "AIRFLOW__SMTP__SMTP_PORT",
+        "value": "${airflow_smtp_port}"
+      },
+      {
+        "name": "AIRFLOW__SMTP__SMTP_USER",
+        "value": "${airflow_smtp_user}"
+      },
+      {
+        "name": "AIRFLOW__SMTP__SMTP_PASSWORD",
+        "value": "${airflow_smtp_password}"
+      },
+      {
+        "name": "AIRFLOW__SMTP__SMTP_MAIL_FROM",
+        "value": "${airflow_smtp_mail_from}"
       }
     ],
     "resourceRequirements": null,
