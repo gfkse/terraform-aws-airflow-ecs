@@ -47,6 +47,48 @@ variable "airflow_core_logging_level" {
   default     = "INFO"
 }
 
+variable "airflow_webserver_rbac" {
+  type        = string
+  description = "Turns on/off RBAC authentication on webserver. Only enabled when set to 'True'."
+  default     = "False" # Only enabled when set to "True"
+}
+
+variable "load_example_dags" {
+  type        = string
+  description = "Whether to load the DAG examples that ship with Airflow. It’s good to get started, but you probably want to set this to False in a production environment."
+  default     = "n"
+}
+
+variable "airflow_core_dag_concurrency" {
+  type        = string
+  description = "The number of task instances allowed to run concurrently by the scheduler."
+  default     = "32"
+}
+
+variable "airflow_core_worker_concurrency" {
+  type        = string
+  description = "The concurrency that will be used when starting workers with the airflow celery worker command. This defines the number of task instances that a worker will take, so size up your workers based on the resources on your worker box and the nature of your tasks."
+  default     = "32"
+}
+
+variable "airflow_core_load_default_connections" {
+  type        = string
+  description = "Whether to load the default connections that ship with Airflow. It’s good to get started, but you probably want to set this to False in a production environment."
+  default     = "False"
+}
+
+variable "airflow_webserver_dag_orientation" {
+  type        = string
+  description = "Default DAG orientation. Valid values are: LR (Left->Right), TB (Top->Bottom), RL (Right->Left), BT (Bottom->Top)."
+  default     = "LR"
+}
+
+variable "airflow_scheduler_dag_dir_list_interval" {
+  type        = string
+  description = "How often (in seconds) to scan the DAGs directory for new files."
+  default     = "180"
+}
+
 variable "airflow_home" {
   type        = string
   description = "Given is where airflow code base resides."

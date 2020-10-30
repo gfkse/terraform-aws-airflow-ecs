@@ -40,7 +40,7 @@ resource "aws_ecs_task_definition" "airflow" {
   network_mode          = var.task_definition_network_mode
   # execution_role_arn        = var.airflow_task_definition_execution_role_arn
   requires_compatibilities = ["EC2"]
-  
+
   volume {
     name      = "requirements"
     host_path =  "${var.airflow_home}/docker/requirements.txt"
@@ -73,6 +73,13 @@ data "template_file" "airflow" {
     region                                    = var.region
     airflow_home                              = var.airflow_home
     airflow_core_logging_level                = var.airflow_core_logging_level
+    airflow_webserver_rbac                    = var.airflow_webserver_rbac
+    load_example_dags                         = var.load_example_dags
+    airflow_core_dag_concurrency              = var.airflow_core_dag_concurrency
+    airflow_core_worker_concurrency           = var.airflow_core_worker_concurrency
+    airflow_core_load_default_connections     = var.airflow_core_load_default_connections
+    airflow_webserver_dag_orientation         = var.airflow_webserver_dag_orientation
+    airflow_scheduler_dag_dir_list_interval   = var.airflow_scheduler_dag_dir_list_interval
   }
 }
 
@@ -80,22 +87,17 @@ data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.sh")
 
   vars = {
-    cluster_name         = "${var.name}-cluster"
-    dag_s3_bucket        = var.dag_s3_bucket
-    dag_s3_key           = var.dag_s3_key
-    rclone_secret_key_id = var.rclone_secret_key_id
-    rclone_secret_key    = var.rclone_secret_key
-    region               = var.region
-    custom_user_data     = var.custom_user_data
-    airflow_home         = var.airflow_home
+    cluster_name            = "${var.name}-cluster"
+    dag_s3_bucket           = var.dag_s3_bucket
+    dag_s3_key              = var.dag_s3_key
+    rclone_secret_key_id    = var.rclone_secret_key_id
+    rclone_secret_key       = var.rclone_secret_key
+    region                  = var.region
+    custom_user_data        = var.custom_user_data
+    airflow_home            = var.airflow_home
+    airflow_webserver_rbac  = var.airflow_webserver_rbac
   }
 }
-
-data "aws_ecs_container_definition" "ecs_airflow" {
-  task_definition = aws_ecs_task_definition.airflow.id
-  container_name  = var.lb_target_container_name
-}
-
 
 resource "aws_launch_configuration" "ecs" {
   name_prefix          = "lc-${var.name}"
