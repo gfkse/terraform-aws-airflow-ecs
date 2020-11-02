@@ -32,11 +32,11 @@ module "aws_alb" {
       target_type      = "ip"
       health_check = {
         enabled             = true
-        interval            = 30
+        interval            = 20
         path                = "/api/experimental/test"
         port                = "traffic-port"
-        healthy_threshold   = 3
-        unhealthy_threshold = 3
+        healthy_threshold   = 5
+        unhealthy_threshold = 5
         timeout             = 5
         protocol            = "HTTP"
         matcher             = "200-299"

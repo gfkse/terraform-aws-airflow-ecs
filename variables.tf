@@ -98,22 +98,32 @@ variable "airflow_scheduler_dag_dir_list_interval" {
 
 variable "airflow_smtp_host" {
   type        = string
+  description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
+  default     = "localhost"
 }
 
 variable "airflow_smtp_port" {
   type        = string
+  description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
+  default     = "25"
 }
 
 variable "airflow_smtp_user" {
   type        = string
+  description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
+  default     = "None"
 }
 
 variable "airflow_smtp_password" {
   type        = string
+  description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
+  default     = "None"
 }
 
 variable "airflow_smtp_mail_from" {
   type        = string
+  description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
+  default     = "airflow@example.com"
 }
 
 ### secrets

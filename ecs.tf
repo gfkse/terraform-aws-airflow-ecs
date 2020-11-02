@@ -9,7 +9,7 @@ resource "aws_ecs_cluster" "this" {
 
 resource "aws_ecs_service" "this" {
   name                = "${var.name}-service"
-  cluster             = aws_ecs_cluster.this.id # module.airflow-docker-ecs.this_ecs_cluster_id  #
+  cluster             = aws_ecs_cluster.this.id
   task_definition     = aws_ecs_task_definition.airflow.arn
   desired_count       = var.ecs_airflow_docker_desired_count
   scheduling_strategy = "REPLICA"
@@ -100,7 +100,6 @@ data "template_file" "user_data" {
     region                  = var.region
     custom_user_data        = var.custom_user_data
     airflow_home            = var.airflow_home
-    airflow_webserver_rbac  = var.airflow_webserver_rbac # TODO: is that really used in template?
   }
 }
 
