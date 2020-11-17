@@ -21,9 +21,9 @@ curl https://rclone.org/install.sh | sudo bash
 echo '*/2 * * * * ec2-user /usr/bin/rclone --ignore-checksum sync s3:${dag_s3_bucket}/${dag_s3_key}/ ${airflow_home}/dags/' > /etc/cron.d/airflowdags
 
 # every day at 3:00 compress the logs which are older than one day
-echo "0 3 * * * ec2-user sudo find ${airflow_home}/logs/scheduler/ -type f -iname '*.log' -mtime +1 -ls -and -exec gzip -9 -f '{}' \;" > /etc/cron.d/compress_scheduler_logs
+# echo "0 3 * * * ec2-user sudo find ${airflow_home}/logs/scheduler/ -type f -iname '*.log' -mtime +1 -ls -and -exec gzip -9 -f '{}' \;" > /etc/cron.d/compress_scheduler_logs
 # every day at 4:00 delete compressed logs older than 90 days
-echo "0 4 * * * ec2-user sudo find ${airflow_home}/logs/scheduler/ -type f -iname '*.log.gz' -mtime +90 -ls -and -delete" > /etc/cron.d/delete_scheduler_logs
+# echo "0 4 * * * ec2-user sudo find ${airflow_home}/logs/scheduler/ -type f -iname '*.log.gz' -mtime +90 -ls -and -delete" > /etc/cron.d/delete_scheduler_logs
 
 mkdir -p /home/ec2-user/.config/rclone/
 cat << EOT >> '/home/ec2-user/.config/rclone/rclone.conf'

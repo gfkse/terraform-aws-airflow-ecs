@@ -1,0 +1,125 @@
+[
+  {
+    "dnsSearchDomains": null,
+    "logConfiguration": {
+      "logDriver": "awslogs",
+      "secretOptions": null,
+      "options": {
+        "awslogs-group": "/ecs/${name}",
+        "awslogs-region": "${region}",
+        "awslogs-stream-prefix": "ecs"
+      }
+    },
+    "entryPoint": [],
+    "portMappings": [
+      {
+        "hostPort": 8080,
+        "protocol": "tcp",
+        "containerPort": 8080
+      }
+    ],
+    "command": [
+      "webserver"
+    ],
+    "linuxParameters": null,
+    "cpu": 0,
+    "environment": [
+      {
+        "name": "EXECUTOR",
+        "value": "Celery"
+      },
+      {
+        "name": "FERNET_KEY",
+        "value": "${fernet_key}"
+      },
+      {
+        "name": "LOAD_EX",
+        "value": "${load_example_dags}"
+      },
+      {
+        "name": "REDIS_HOST",
+        "value": "${airflow_docker_elasticache_cache_host}"
+      },
+      {
+        "name": "AIRFLOW__WEBSERVER__RBAC",
+        "value": "${airflow_webserver_rbac}"
+      },
+      {
+        "name": "AIRFLOW__CORE__DAG_CONCURRENCY",
+        "value": "${airflow_core_dag_concurrency}"
+      },
+      {
+        "name": "AIRFLOW__CORE__WORKER_CONCURRENCY",
+        "value": "${airflow_core_worker_concurrency}"
+      },
+      {
+        "name": "AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS",
+        "value": "${airflow_core_load_default_connections}"
+      },
+      {
+        "name": "AIRFLOW__CORE__SQL_ALCHEMY_CONN",
+        "value": "postgresql+psycopg2://${rds_username}:${rds_password}@${rds_instance_endpoint}/${rds_db_name}"
+      },
+      {
+        "name": "AIRFLOW__CELERY__RESULT_BACKEND",
+        "value": "db+postgresql://${rds_username}:${rds_password}@${rds_instance_endpoint}/${rds_db_name}"
+      },
+      {
+        "name": "AIRFLOW__CORE__LOGGING_LEVEL",
+        "value": "${airflow_core_logging_level}"
+      },
+      {
+        "name": "AIRFLOW__WEBSERVER__DAG_ORIENTATION",
+        "value": "${airflow_webserver_dag_orientation}"
+      }
+    ],
+    "resourceRequirements": null,
+    "ulimits": null,
+    "dnsServers": null,
+    "mountPoints": [
+      {
+        "readOnly": true,
+        "containerPath": "/usr/local/airflow/dags",
+        "sourceVolume": "dags"
+      },
+      {
+        "readOnly": null,
+        "containerPath": "/requirements.txt",
+        "sourceVolume": "requirements"
+      }
+    ],
+    "workingDirectory": null,
+    "secrets": null,
+    "dockerSecurityOptions": null,
+    "memory": null,
+    "memoryReservation": null,
+    "volumesFrom": [],
+    "stopTimeout": null,
+    "image": "${airflow_docker_image}",
+    "startTimeout": null,
+    "dependsOn": null,
+    "disableNetworking": null,
+    "interactive": null,
+    "healthCheck": {
+      "retries": 3,
+      "command": [
+        "CMD-SHELL",
+        "[ -f /usr/local/airflow/airflow-webserver.pid ]"
+      ],
+      "timeout": 30,
+      "interval": 30,
+      "startPeriod": null
+    },
+    "essential": true,
+    "links": null,
+    "hostname": null,
+    "extraHosts": null,
+    "pseudoTerminal": null,
+    "user": null,
+    "readonlyRootFilesystem": null,
+    "dockerLabels": null,
+    "systemControls": null,
+    "privileged": null,
+    "name": "webserver"
+  }
+]

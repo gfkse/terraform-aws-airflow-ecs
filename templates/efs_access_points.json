@@ -1,0 +1,14 @@
+{
+  "var/log/scheduler": {
+    "posix_user": {"gid": 1000, "uid": 1000},
+    "creation_info": {"gid": 1000, "uid": 1000, "permissions": 755}
+  },
+  "var/log/worker": {
+    "posix_user": {"gid": 1000, "uid": 1000},
+    "creation_info": {"gid": 1000, "uid": 1000, "permissions": 755}
+  },
+  "usr/local/airflow/dags": {
+    "posix_user": {"gid": 1000, "uid": 1000},
+    "creation_info": {"gid": 1000, "uid": 1000, "permissions": 755}
+  }
+}

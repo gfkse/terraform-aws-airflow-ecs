@@ -2,8 +2,8 @@ output "airflow_webserver_url" {
   value = aws_route53_record.this.fqdn
 }
 
-output "ecs_service_id" {
-  value = aws_ecs_service.this.id
+output "ecs_cluster_name" {
+  value = aws_ecs_cluster.this.name
 }
 
 output "elasticache_nodes" {
@@ -29,3 +29,22 @@ output "target_group_arn" {
   value       = element(module.aws_alb.target_group_arns, 0)
 }
 
+output "efs_id" {
+  description = "EFS id, where logs, DAGs and configs are stored."
+  value       = module.efs.id
+}
+
+output "efs_arn" {
+  description = "EFS arn, where logs, DAGs and configs are stored."
+  value       = module.efs.arn
+}
+
+output "efs_access_point_ids" {
+  description = "Dictionary of EFS access point ids."
+  value       = module.efs.access_point_ids
+}
+
+output "efs_access_point_arns" {
+  description = "Dictionary of EFS access point arns."
+  value       = module.efs.access_point_arns
+}

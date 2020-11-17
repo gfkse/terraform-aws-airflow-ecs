@@ -43,7 +43,7 @@ variable "dns_zone_id" {
 
 variable "airflow_home" {
   type        = string
-  description = "Given is where airflow code base resides."
+  description = "A folder on container instance, where dags reside."
   default     = "/home/ec2-user/airflow"
 }
 
@@ -171,32 +171,32 @@ variable "rds_security_group_ids" {
   description = "A list of security group IDs to associate with."
 }
 
-variable "rds_airflow_docker_storage" {
+variable "rds_storage" {
   type        = string
   description = "Storage for airflow docker rds instance in gb."
   default     = "100"
 }
 
-variable "rds_airflow_docker_instance_class" {
+variable "rds_instance_class" {
   type        = string
   description = "Cpu / memory class of the rds instance for docker airflow."
   default     = "db.t2.micro"
 }
 
-variable "rds_airflow_docker_username" {
+variable "rds_username" {
   type        = string
   description = "Database username for postgres."
   default     = "airflowdocker"
 }
 
-variable "rds_airflow_docker_password" {
+variable "rds_password" {
   type        = string
   description = "Database password for postgres."
 }
 
 ### elasticache
 
-variable "elasticache_airflow_docker_node_type" {
+variable "elasticache_node_type" {
   type        = string
   description = "Type of nodes to be used for elasticache cluster."
   default     = "cache.t2.micro"
@@ -232,15 +232,16 @@ variable "alb_access_logs_bucket" {
 }
 
 ### ecs_service
-variable "ecs_airflow_docker_security_group_id" {
-  type        = list(any)
-  description = "SG for ecs task_defition (elastic network interface)."
-}
-
-variable "ecs_airflow_docker_desired_count" {
+variable "ecs_desired_count" {
   type        = string
   description = "Desired number of tasks, either 0 or 1."
   default     = "1"
+}  # TODO(ilya_isakov): right now the variable is not used
+
+variable "cloudwatch_retention" {
+  type        = string
+  description = "Retention for container logs delivered to cloudwatch."
+  default     = "7"
 }
 
 ### launch_configuration
@@ -273,36 +274,65 @@ variable "ebs_block_device_delete_on_termination" {
   default     = true
 }
 
-variable "ecs_airflow_docker_ami_id" {
+variable "ecs_ami_id" {
   type        = string
   description = "ECS container instance ami."
-  default     = "ami-08c1d0b4f39f110d4"
+  default     = "ami-0b7f40a0eabbcc8c0"
 }
 
-variable "ecs_airflow_docker_instance_type" {
+variable "ecs_instance_type" {
   type        = string
   description = "ECS container instance type."
-  default     = "t2.medium"
+  default     = "t3.small"
 }
 
-### task_definition
-variable "task_definition_family" {
-  type    = string
-  default = "airflow"
-}
-
-variable "task_definition_memory" {
+### webserver task_definition
+variable "webserver_task_definition_memory" {
   type        = string
   description = "Desired task definition memory."
-  default     = 2048
+  default     = 768
 }
 
-variable "task_definition_cpu" {
+variable "webserver_task_definition_cpu" {
   type        = string
   description = "Desired task definition cpu."
   default     = 1024 # 1 core
 }
 
-variable "task_definition_network_mode" {
+variable "webserver_task_definition_network_mode" {
+  default = "awsvpc"
+}
+
+### scheduler task_definition
+variable "scheduler_task_definition_memory" {
+  type        = string
+  description = "Desired task definition memory."
+  default     = 768
+}
+
+variable "scheduler_task_definition_cpu" {
+  type        = string
+  description = "Desired task definition cpu."
+  default     = 1024 # 1 core
+}
+
+variable "scheduler_task_definition_network_mode" {
+  default = "awsvpc"
+}
+
+### worker task_definition
+variable "worker_task_definition_memory" {
+  type        = string
+  description = "Desired task definition memory."
+  default     = 1200
+}
+
+variable "worker_task_definition_cpu" {
+  type        = string
+  description = "Desired task definition cpu."
+  default     = 1536 # 1,5 core
+}
+
+variable "worker_task_definition_network_mode" {
   default = "awsvpc"
 }

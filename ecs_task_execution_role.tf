@@ -9,6 +9,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
   }
 }
 
+# TODO(ilya_isakov): check where the role is used and add path
 resource "aws_iam_role" "airflow-task-definition-execution-role" {
   name               = "airflowTaskDefinitionExecutionRole"
   path               = "/"
