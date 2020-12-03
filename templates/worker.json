@@ -23,6 +23,10 @@
         "value": "Celery"
       },
       {
+        "name": "C_FORCE_ROOT",
+        "value": "true"
+      },
+      {
         "name": "FERNET_KEY",
         "value": "${fernet_key}"
       },
@@ -89,7 +93,7 @@
         "sourceVolume": "dags"
       },
       {
-        "readOnly": null,
+        "readOnly": true,
         "containerPath": "/requirements.txt",
         "sourceVolume": "requirements"
       },

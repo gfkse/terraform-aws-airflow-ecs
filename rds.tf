@@ -9,7 +9,8 @@ resource "aws_db_instance" "this" {
   username                  = var.rds_username
   password                  = var.rds_password
   final_snapshot_identifier = "final-snapshot-${var.name}"
-  vpc_security_group_ids    = var.rds_security_group_ids
+  skip_final_snapshot       = var.skip_final_snapshot
+  vpc_security_group_ids    = [aws_security_group.sg_airflow_internal.id]
   db_subnet_group_name      = aws_db_subnet_group.this.name
   backup_retention_period   = 7
   maintenance_window        = "Mon:00:00-Mon:03:00"

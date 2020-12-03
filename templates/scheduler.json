@@ -78,7 +78,7 @@
         "sourceVolume": "scheduler_logs"
       },
       {
-        "readOnly": null,
+        "readOnly": true,
         "containerPath": "/requirements.txt",
         "sourceVolume": "requirements"
       }

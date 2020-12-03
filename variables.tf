@@ -87,7 +87,7 @@ variable "airflow_core_load_default_connections" {
 variable "airflow_webserver_dag_orientation" {
   type        = string
   description = "Default DAG orientation. Valid values are: LR (Left->Right), TB (Top->Bottom), RL (Right->Left), BT (Bottom->Top)."
-  default     = "LR"
+  default     = "TB"
 }
 
 variable "airflow_scheduler_dag_dir_list_interval" {
@@ -127,7 +127,7 @@ variable "airflow_smtp_mail_from" {
 }
 
 ### secrets
-variable "airflow_image_version" {
+variable "airflow_image" {
   type        = string
   description = "Docker image name to use in the task definition `templates/airflow.json`."
   default     = "puckel/docker-airflow:1.10.9"
@@ -159,18 +159,18 @@ variable "dag_s3_key" {
   description = "A path to folder in the bucket where DAGs are stored."
 }
 
+variable "requirements_s3_key" {
+  type        = string
+  description = "A path to folder in the bucket where requirements file is stored."
+}
+
 variable "custom_user_data" {
   type        = string
-  description = "user_data extention for container instance."
+  description = "user_data extention for container instance. This is used only in case of EC2 ECS launch type."
   default     = ""
 }
 
 ### RDS
-variable "rds_security_group_ids" {
-  type        = list(string)
-  description = "A list of security group IDs to associate with."
-}
-
 variable "rds_storage" {
   type        = string
   description = "Storage for airflow docker rds instance in gb."
@@ -192,6 +192,13 @@ variable "rds_username" {
 variable "rds_password" {
   type        = string
   description = "Database password for postgres."
+}
+
+
+variable "skip_final_snapshot" {
+  type        = bool
+  description = "If true, the final snapshot creation will be skipped when db is destroyed."
+  default     = false
 }
 
 ### elasticache
@@ -232,11 +239,11 @@ variable "alb_access_logs_bucket" {
 }
 
 ### ecs_service
-variable "ecs_desired_count" {
+variable "ecs_launch_type" {
   type        = string
-  description = "Desired number of tasks, either 0 or 1."
-  default     = "1"
-}  # TODO(ilya_isakov): right now the variable is not used
+  description = "Launch type for ECS cluster instances (EC2 or FARGATE)."
+  default     = "EC2"
+}
 
 variable "cloudwatch_retention" {
   type        = string
@@ -248,30 +255,6 @@ variable "cloudwatch_retention" {
 variable "key_name" {
   type        = string
   description = "EC2 Instance key."
-}
-
-variable "ebs_block_device_name" {
-  type        = string
-  description = "Block device for container instance name."
-  default     = "/dev/xvdcz"
-}
-
-variable "ebs_block_device_volume_size" {
-  type        = string
-  description = "Block device for container instance volume size."
-  default     = 25
-}
-
-variable "ebs_block_device_volume_type" {
-  type        = string
-  description = "Block device for container instance volume type."
-  default     = "gp2"
-}
-
-variable "ebs_block_device_delete_on_termination" {
-  type        = bool
-  description = "Block device for container instance deletion policy."
-  default     = true
 }
 
 variable "ecs_ami_id" {
@@ -286,17 +269,23 @@ variable "ecs_instance_type" {
   default     = "t3.small"
 }
 
+variable "container_instance_sg_ids" {
+  type        = list(string)
+  description = "List of additional security groups for container instances (eg. enable ssh)."
+  default     = []
+}
+
 ### webserver task_definition
 variable "webserver_task_definition_memory" {
   type        = string
   description = "Desired task definition memory."
-  default     = 768
+  default     = 1024
 }
 
 variable "webserver_task_definition_cpu" {
   type        = string
   description = "Desired task definition cpu."
-  default     = 1024 # 1 core
+  default     = 512
 }
 
 variable "webserver_task_definition_network_mode" {
@@ -307,13 +296,13 @@ variable "webserver_task_definition_network_mode" {
 variable "scheduler_task_definition_memory" {
   type        = string
   description = "Desired task definition memory."
-  default     = 768
+  default     = 1024
 }
 
 variable "scheduler_task_definition_cpu" {
   type        = string
   description = "Desired task definition cpu."
-  default     = 1024 # 1 core
+  default     = 512
 }
 
 variable "scheduler_task_definition_network_mode" {
@@ -324,13 +313,13 @@ variable "scheduler_task_definition_network_mode" {
 variable "worker_task_definition_memory" {
   type        = string
   description = "Desired task definition memory."
-  default     = 1200
+  default     = 1024
 }
 
 variable "worker_task_definition_cpu" {
   type        = string
   description = "Desired task definition cpu."
-  default     = 1536 # 1,5 core
+  default     = 512
 }
 
 variable "worker_task_definition_network_mode" {

@@ -14,7 +14,7 @@ module "aws_alb" {
   name               = "${var.name}-lb"
   load_balancer_type = "application"
   internal           = true
-  security_groups    = var.lb_security_group_ids
+  security_groups    = concat([aws_security_group.sg_airflow_internal.id], var.lb_security_group_ids)
   idle_timeout       = var.lb_idle_timeout
   vpc_id             = var.vpc_id
   subnets            = var.private_subnet_ids

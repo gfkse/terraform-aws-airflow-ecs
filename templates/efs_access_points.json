@@ -10,5 +10,9 @@
   "usr/local/airflow/dags": {
     "posix_user": {"gid": 1000, "uid": 1000},
     "creation_info": {"gid": 1000, "uid": 1000, "permissions": 755}
+  },
+  "requirements": {
+    "posix_user": {"gid": 1000, "uid": 1000},
+    "creation_info": {"gid": 1000, "uid": 1000, "permissions": 755}
   }
 }
