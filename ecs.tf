@@ -125,7 +125,7 @@ resource "aws_ecs_task_definition" "webserver" {
 }
 
 resource "aws_ecs_task_definition" "scheduler" {
-  family                   = "${var.name}-scheduler" # var.task_definition_family
+  family                   = "${var.name}-scheduler"
   container_definitions    = data.template_file.scheduler.rendered
   memory                   = var.scheduler_task_definition_memory
   cpu                      = var.scheduler_task_definition_cpu
@@ -297,11 +297,5 @@ data "template_file" "worker" {
     airflow_smtp_password                 = var.airflow_smtp_password
     airflow_smtp_mail_from                = var.airflow_smtp_mail_from
     airflow_docker_image                  = var.airflow_image
-
-    # airflow_home                              = var.airflow_home
-    # airflow_webserver_rbac                    = var.airflow_webserver_rbac
-    # airflow_core_dag_concurrency              = var.airflow_core_dag_concurrency
-    # airflow_webserver_dag_orientation         = var.airflow_webserver_dag_orientation
-    # airflow_scheduler_dag_dir_list_interval   = var.airflow_scheduler_dag_dir_list_interval
   }
 }

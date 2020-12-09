@@ -88,7 +88,7 @@
         "sourceVolume": "requirements"
       },
       {
-        "readOnly": true,
+        "readOnly": false,
         "containerPath": "/usr/local/airflow/logs",
         "sourceVolume": "worker_logs"
       }

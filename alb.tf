@@ -1,11 +1,3 @@
-### SSL Cert ###
-data "aws_acm_certificate" "this" {
-  domain      = var.certificate_domain_name
-  types       = ["AMAZON_ISSUED"]
-  most_recent = true
-}
-
-### Loadbalancer ###
 # TODO(ilya_isakov): change backend protocol to HTTPS
 module "aws_alb" {
   source  = "terraform-aws-modules/alb/aws"
@@ -67,17 +59,4 @@ module "aws_alb" {
   ]
 
   tags = var.tags
-}
-
-### DNS record ###
-resource "aws_route53_record" "this" {
-  zone_id = var.dns_zone_id
-  name    = var.name
-  type    = "A"
-
-  alias {
-    name                   = module.aws_alb.this_lb_dns_name
-    zone_id                = module.aws_alb.this_lb_zone_id
-    evaluate_target_health = true
-  }
 }
