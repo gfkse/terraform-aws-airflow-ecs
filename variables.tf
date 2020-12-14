@@ -279,7 +279,7 @@ variable "container_instance_sg_ids" {
 variable "webserver_task_definition_memory" {
   type        = string
   description = "Desired task definition memory."
-  default     = 1024
+  default     = 900
 }
 
 variable "webserver_task_definition_cpu" {

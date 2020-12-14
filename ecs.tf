@@ -10,7 +10,7 @@ resource "aws_ecs_service" "webserver" {
   launch_type         = var.ecs_launch_type
   desired_count       = 1
   scheduling_strategy = "REPLICA"
-  platform_version    = var.ecs_launch_type == "EC2" ? null : "1.4.0"
+  platform_version    = var.ecs_launch_type == "FARGATE" ? "1.4.0" : null
 
   load_balancer {
     target_group_arn = element(module.aws_alb.target_group_arns, 0)
@@ -37,7 +37,7 @@ resource "aws_ecs_service" "scheduler" {
   launch_type         = var.ecs_launch_type
   desired_count       = 1
   scheduling_strategy = "REPLICA"
-  platform_version    = var.ecs_launch_type == "EC2" ? null : "1.4.0"
+  platform_version    = var.ecs_launch_type == "FARGATE" ? "1.4.0" : null
 
   # TODO(ilya_isakov): add placement constraint to a variable
   # placement_constraints {
@@ -58,7 +58,7 @@ resource "aws_ecs_service" "worker" {
   launch_type         = var.ecs_launch_type
   desired_count       = 1
   scheduling_strategy = "REPLICA"
-  platform_version    = var.ecs_launch_type == "EC2" ? null : "1.4.0"
+  platform_version    = var.ecs_launch_type == "FARGATE" ? "1.4.0" : null
 
   # TODO(ilya_isakov): add placement constraint to a variable
   # placement_constraints {
@@ -78,7 +78,7 @@ resource "aws_ecs_task_definition" "webserver" {
   memory                   = var.webserver_task_definition_memory
   cpu                      = var.webserver_task_definition_cpu
   network_mode             = var.webserver_task_definition_network_mode
-  execution_role_arn       = var.ecs_launch_type == "EC2" ? null : aws_iam_role.ecs_fargate_task_execution_role.arn
+  execution_role_arn       = var.ecs_launch_type == "FARGATE" ? aws_iam_role.ecs_fargate_task_execution_role.arn : null
   requires_compatibilities = [var.ecs_launch_type]
   task_role_arn            = aws_iam_role.ecs_task_role.arn
 
@@ -130,7 +130,7 @@ resource "aws_ecs_task_definition" "scheduler" {
   memory                   = var.scheduler_task_definition_memory
   cpu                      = var.scheduler_task_definition_cpu
   network_mode             = var.scheduler_task_definition_network_mode
-  execution_role_arn       = var.ecs_launch_type == "EC2" ? null : aws_iam_role.ecs_fargate_task_execution_role.arn
+  execution_role_arn       = var.ecs_launch_type == "FARGATE" ? aws_iam_role.ecs_fargate_task_execution_role.arn : null
   requires_compatibilities = [var.ecs_launch_type]
   task_role_arn            = aws_iam_role.ecs_task_role.arn
 
@@ -182,7 +182,7 @@ resource "aws_ecs_task_definition" "worker" {
   memory                   = var.worker_task_definition_memory
   cpu                      = var.worker_task_definition_cpu
   network_mode             = var.worker_task_definition_network_mode
-  execution_role_arn       = var.ecs_launch_type == "EC2" ? null : aws_iam_role.ecs_fargate_task_execution_role.arn
+  execution_role_arn       = var.ecs_launch_type == "FARGATE" ? aws_iam_role.ecs_fargate_task_execution_role.arn : null
   requires_compatibilities = [var.ecs_launch_type]
   task_role_arn            = aws_iam_role.ecs_task_role.arn
 

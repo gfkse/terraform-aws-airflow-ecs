@@ -1,5 +1,5 @@
 data "template_file" "user_data" {
-  count    = var.ecs_launch_type == "EC2" ? 1 : 0
+  count    = var.ecs_launch_type == "FARGATE" ? 0 : 1
   template = file("${path.module}/templates/user_data.sh")
 
   vars = {
@@ -15,7 +15,7 @@ data "template_file" "user_data" {
 }
 
 resource "aws_launch_configuration" "ecs" {
-  count                = var.ecs_launch_type == "EC2" ? 1 : 0
+  count                = var.ecs_launch_type == "FARGATE" ? 0 : 1
   name_prefix          = "lc-${var.name}"
   image_id             = var.ecs_ami_id
   instance_type        = var.ecs_instance_type
@@ -30,7 +30,7 @@ resource "aws_launch_configuration" "ecs" {
 }
 
 resource "aws_autoscaling_group" "ecs" {
-  count                = var.ecs_launch_type == "EC2" ? 1 : 0
+  count                = var.ecs_launch_type == "FARGATE" ? 0 : 1
   name                 = "autoscaling-${var.name}"
   launch_configuration = aws_launch_configuration.ecs[0].name
   vpc_zone_identifier  = var.private_subnet_ids
