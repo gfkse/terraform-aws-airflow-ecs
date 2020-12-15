@@ -1,12 +1,12 @@
 #### Education environment (easiest to start)
-Default variables values are configured in such a way, to make cluster up and
+Default variable values are configured to get the cluster up and
 running as easy as possible. 
 
 #### Development environment
 No special recommendations
 
 #### Production environment
-When using module in production environment we recommend to take closer look at
+When using the module in production environment we recommend to take closer look at
 values of following variables:
 1. rds_instance_class
 2. webserver_task_definition_memory
