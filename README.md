@@ -1,14 +1,14 @@
 ## Terraform airflow module
-Fully equipped AirFlow service on aws, as simple to run as possible. Airflow cluster
+Fully equipped AirFlow service on AWS, as simple to run as possible. Airflow cluster
 created by this module is NOT intended to be used for heavy lifting, main purpose
-was to trigger services managed by AWS. Default configurations are for educational
+is to trigger services managed by AWS. Default configurations are for educational
 purposes and are the most simple to start with. More information about this module
-could be found in [docs.](./docs/index.md)
+can be found in [docs.](./docs/index.md)
 
 #### Architecture overview
 ![Airflow components schema](docs/module_architecture.png)
 
-This root module deploy everything, what is inside the green rectangle.
+This root module deploys everything that is inside the green rectangle.
 
 #### What is NOT deployed by current module (prerequisites):
 1. S3 bucket for Terraform config backend (tfstate)
@@ -19,18 +19,17 @@ This root module deploy everything, what is inside the green rectangle.
     [AccessControl](https://docs.aws.amazon.com/elasticloadbalancing/latest/application/load-balancer-access-logs.html)
     Use the following string LB Access Logs S3 Location
     lb-logs-bucket-name-comes-here/logs-lb-airflow
-5. VPC, in which AirFlow resides
-7. Make sure the IAM user terraform is using has all the required (ec2,s3,
-    elasticcache,log etc) permissions
-8. DNS zone (Route53) and SSL certificate (acm)
+5. VPC AirFlow resides in
+7. Make sure the IAM user your terraform is using has all the required permissions (EC2,S3, ElastiCache, etc.)
+8. DNS zone (Route53) and SSL certificate (ACM)
 9. Key pair for SSH access to ECS EC2 instances
 
 #### TODOs
 1. Add tests:
-    a. that Dag are picked up from s3
-    c. that dags could run
-    d. logs for DAGs appear
-    e. webserver responds
+    * that DAGs are picked up from AWS S3
+    * that DAGs can run
+    * that logs for DAGs appear
+    * that webserver responds
 2. Check if adjusting of name variable is enough to run multiple AF clusters in one
     account
 3. Further improvements: configure autoscaling for worker task
