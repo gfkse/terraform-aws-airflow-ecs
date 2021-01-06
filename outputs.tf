@@ -48,3 +48,8 @@ output "efs_access_point_arns" {
   description = "Dictionary of EFS access point arns."
   value       = module.efs.access_point_arns
 }
+
+output "sg_airflow_internal" {
+  description = "Internal security group. Used in data sync tasks, ecs container instances, elasticache, rds. Can be used for Datadog logging."
+  value       = aws_security_group.sg_airflow_internal.id
+}
