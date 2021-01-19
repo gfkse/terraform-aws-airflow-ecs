@@ -260,7 +260,7 @@ variable "key_name" {
 variable "ecs_ami_id" {
   type        = string
   description = "ECS container instance ami."
-  default     = "ami-0b7f40a0eabbcc8c0"
+  default     = "ami-0e781777db20a4f7f"
 }
 
 variable "ecs_instance_type" {
