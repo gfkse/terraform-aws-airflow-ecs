@@ -73,14 +73,14 @@
         "sourceVolume": "dags"
       },
       {
+        "readOnly": true,
+        "containerPath": "/requirements.txt",
+        "sourceVolume": "requirements_on_ec2"
+      },
+      {
         "readOnly": false,
         "containerPath": "/usr/local/airflow/logs",
         "sourceVolume": "scheduler_logs"
-      },
-      {
-        "readOnly": true,
-        "containerPath": "/requirements.txt",
-        "sourceVolume": "requirements"
       }
     ],
     "workingDirectory": null,

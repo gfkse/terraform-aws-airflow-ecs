@@ -83,6 +83,11 @@ resource "aws_ecs_task_definition" "webserver" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
 
   volume {
+    name      = "requirements_on_ec2"
+    host_path = "/home/ec2-user/airflow/docker/requirements.txt"
+  }
+
+  volume {
     name = "requirements"
     efs_volume_configuration {
       file_system_id          = module.efs.id
@@ -135,6 +140,11 @@ resource "aws_ecs_task_definition" "scheduler" {
   task_role_arn            = aws_iam_role.ecs_task_role.arn
 
   volume {
+    name      = "requirements_on_ec2"
+    host_path = "/home/ec2-user/airflow/docker/requirements.txt"
+  }
+
+  volume {
     name = "requirements"
     efs_volume_configuration {
       file_system_id          = module.efs.id
@@ -185,6 +195,11 @@ resource "aws_ecs_task_definition" "worker" {
   execution_role_arn       = var.ecs_launch_type == "FARGATE" ? aws_iam_role.ecs_fargate_task_execution_role.arn : null
   requires_compatibilities = [var.ecs_launch_type]
   task_role_arn            = aws_iam_role.ecs_task_role.arn
+
+  volume {
+    name      = "requirements_on_ec2"
+    host_path = "/home/ec2-user/airflow/docker/requirements.txt"
+  }
 
   volume {
     name = "requirements"
