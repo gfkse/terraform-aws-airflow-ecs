@@ -11,13 +11,13 @@ data "aws_iam_policy_document" "datasync-role-policy" {
 }
 
 resource "aws_iam_role" "dags-datasync-task-role" {
-  name               = "DagsDatasyncTaskRole"
+  name               = "${var.name}-dags-datasync-task-role"
   path               = "/airflow_module/"
   assume_role_policy = data.aws_iam_policy_document.datasync-role-policy.json
 }
 
 resource "aws_iam_policy" "dags-datasync-task-policy" {
-  name        = "dags-datasync-task-policy"
+  name        = "${var.name}-dags-datasync-task-policy"
   path        = "/airflow_module/"
   description = "Policy allowing Datasync to copy DAGs from s3 to EFS"
 
