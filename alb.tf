@@ -1,3 +1,10 @@
+locals {
+  access_log_storage = {
+    bucket = var.alb_access_logs_bucket
+    prefix = "alb/${var.name}-lb"
+  }
+}
+
 # TODO(ilya_isakov): change backend protocol to HTTPS
 module "aws_alb" {
   source  = "terraform-aws-modules/alb/aws"
@@ -11,10 +18,7 @@ module "aws_alb" {
   vpc_id             = var.vpc_id
   subnets            = var.private_subnet_ids
 
-  access_logs = {
-    bucket = var.alb_access_logs_bucket
-    prefix = "alb/${var.name}-lb"
-  }
+  access_logs = var.alb_access_logs_bucket != "" ? local.access_log_storage: {}
 
   target_groups = [
     {

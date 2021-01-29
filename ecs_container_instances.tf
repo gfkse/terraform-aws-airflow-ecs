@@ -3,14 +3,12 @@ data "template_file" "user_data" {
   template = file("${path.module}/templates/user_data.sh")
 
   vars = {
-    cluster_name         = "${var.name}-cluster"
-    dag_s3_bucket        = var.dag_s3_bucket
-    dag_s3_key           = var.dag_s3_key
-    rclone_secret_key_id = var.rclone_secret_key_id
-    rclone_secret_key    = var.rclone_secret_key
-    region               = var.region
-    custom_user_data     = var.custom_user_data
-    airflow_home         = var.airflow_home
+    cluster_name     = "${var.name}-cluster"
+    dag_s3_bucket    = var.dag_s3_bucket
+    dag_s3_key       = var.dag_s3_key
+    region           = var.region
+    custom_user_data = var.custom_user_data
+    airflow_home     = var.airflow_home
   }
 }
 
