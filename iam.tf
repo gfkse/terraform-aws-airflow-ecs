@@ -98,6 +98,3 @@ resource "aws_iam_role_policy_attachment" "ecs_task_policy_efs_usage" {
   policy_arn = aws_iam_policy.ecs_task_policy_efs_usage.arn
 }
 
-data "aws_iam_role" "service_role_for_ecs" {
-  name = "AWSServiceRoleForECS"
-}
