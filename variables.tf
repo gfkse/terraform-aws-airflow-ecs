@@ -194,11 +194,16 @@ variable "rds_password" {
   description = "Database password for postgres."
 }
 
-
 variable "skip_final_snapshot" {
   type        = bool
   description = "If true, the final snapshot creation will be skipped when db is destroyed."
   default     = false
+}
+
+variable "rds_engine_version" {
+  type        = string
+  description = "The db engine version to use. auto_minor_version_upgrade is disabled"
+  default     = "10.15"
 }
 
 ### elasticache
