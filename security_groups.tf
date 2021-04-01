@@ -1,5 +1,5 @@
 resource "aws_security_group" "sg_airflow_internal" {
-  name        = "sg_airflow_internal"
+  name        = "${var.name}-sg-airflow-internal"
   description = "Security group for Airflow internal traffic (Elasticache, RDS, ENIs, Datasync task, EFS mount targets)."
   vpc_id      = var.vpc_id
 

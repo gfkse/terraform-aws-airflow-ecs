@@ -34,7 +34,7 @@ data "aws_iam_policy_document" "instance-assume-role-policy" {
 }
 
 resource "aws_iam_role" "airflow-task-definition-execution-role" {
-  name               = "airflowTaskDefinitionExecutionRole"
+  name               = "${var.name}-task-definition-execution-role"
   path               = "/airflow_module/"
   assume_role_policy = data.aws_iam_policy_document.instance-assume-role-policy.json
   tags               = var.tags
@@ -52,7 +52,7 @@ resource "aws_iam_role_policy_attachment" "system-manager-policy-attachment" {
 }
 
 resource "aws_iam_instance_profile" "airflow-task-definition-execution-profile" {
-  name = "airflow-task-definition-execution-profile"
+  name = "${var.name}-task-definition-execution-profile"
   role = aws_iam_role.airflow-task-definition-execution-role.name
 }
 

@@ -17,7 +17,7 @@ resource "aws_elasticache_subnet_group" "this" {
 }
 
 resource "aws_elasticache_parameter_group" "this" {
-  name   = "af-cache-params"
+  name   = "${var.name}-cache-params"
   family = "redis5.0"
 
   parameter {

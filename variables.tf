@@ -133,20 +133,9 @@ variable "airflow_image" {
   default     = "puckel/docker-airflow:1.10.9"
 }
 
-variable "rclone_secret_key" {
-  type        = string
-  description = "A key used to copy DAGs from the bucket to container instance."
-}
-
 variable "airflow_fernet_key" {
   type        = string
   description = "A key used to encrypt connection's passwords in AF metadata database."
-}
-
-### user_data
-variable "rclone_secret_key_id" {
-  type        = string
-  description = "A key_id used to copy DAGs from the bucket to container instance."
 }
 
 variable "dag_s3_bucket" {
@@ -241,6 +230,7 @@ variable "lb_target_container_port" {
 variable "alb_access_logs_bucket" {
   type        = string
   description = "An s3 bucket, where to store logs from alb."
+  default     = ""
 }
 
 ### ecs_service
