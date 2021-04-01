@@ -18,7 +18,7 @@ module "aws_alb" {
   vpc_id             = var.vpc_id
   subnets            = var.private_subnet_ids
 
-  access_logs = var.alb_access_logs_bucket != "" ? local.access_log_storage: {}
+  access_logs = var.alb_access_logs_bucket != "" ? local.access_log_storage : {}
 
   target_groups = [
     {
