@@ -108,6 +108,18 @@ variable "airflow_smtp_port" {
   default     = "25"
 }
 
+variable "airflow_smtp_starttls" {
+  type = string
+  description = "SMTP configuration: Inform the email server to use secure connection"
+  default = "True"
+}
+
+variable "airflow_smtp_smtp_ssl" {
+  type = string
+  description = "SMTP configuration: Use SSL"
+  default = "False"
+}
+
 variable "airflow_smtp_user" {
   type        = string
   description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
@@ -125,6 +137,7 @@ variable "airflow_smtp_mail_from" {
   description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
   default     = "airflow@example.com"
 }
+
 
 ### secrets
 variable "airflow_image" {

@@ -67,6 +67,14 @@
         "value": "${airflow_smtp_host}"
       },
       {
+        "name": "AIRFLOW__SMTP__SMTP_STARTTLS",
+        "value": "${airflow_smtp_starttls}"
+      },
+      {
+        "name": "AIRFLOW__SMTP__SMTP_SSL",
+        "value": "${airflow_smtp_ssl}"
+      },
+      {
         "name": "AIRFLOW__SMTP__SMTP_PORT",
         "value": "${airflow_smtp_port}"
       },
