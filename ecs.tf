@@ -308,6 +308,8 @@ data "template_file" "worker" {
     airflow_core_logging_level            = var.airflow_core_logging_level
     airflow_smtp_host                     = var.airflow_smtp_host
     airflow_smtp_port                     = var.airflow_smtp_port
+    airflow_smtp_ssl                      = var.airflow_smtp_smtp_ssl
+    airflow_smtp_starttls                 = var.airflow_smtp_starttls
     airflow_smtp_user                     = var.airflow_smtp_user
     airflow_smtp_password                 = var.airflow_smtp_password
     airflow_smtp_mail_from                = var.airflow_smtp_mail_from
