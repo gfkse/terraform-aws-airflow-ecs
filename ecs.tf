@@ -249,7 +249,7 @@ data "template_file" "webserver" {
     name                                  = var.name
     region                                = var.region
     fernet_key                            = var.airflow_fernet_key
-    load_example_dags                     = var.load_example_dags
+    load_example_dags                     = var.airflow_core_load_example_dags
     airflow_docker_elasticache_cache_host = aws_elasticache_cluster.this.cache_nodes[0].address
     airflow_webserver_rbac                = var.airflow_webserver_rbac
     airflow_core_dag_concurrency          = var.airflow_core_dag_concurrency
@@ -275,7 +275,7 @@ data "template_file" "scheduler" {
     name                                    = var.name
     region                                  = var.region
     fernet_key                              = var.airflow_fernet_key
-    load_example_dags                       = var.load_example_dags
+    load_example_dags                       = var.airflow_core_load_example_dags
     airflow_docker_elasticache_cache_host   = aws_elasticache_cluster.this.cache_nodes[0].address
     airflow_core_dag_concurrency            = var.airflow_core_dag_concurrency
     airflow_core_worker_concurrency         = var.airflow_core_worker_concurrency
@@ -296,7 +296,7 @@ data "template_file" "worker" {
     name                                  = var.name
     region                                = var.region
     fernet_key                            = var.airflow_fernet_key
-    load_example_dags                     = var.load_example_dags
+    load_example_dags                     = var.airflow_core_load_example_dags
     airflow_docker_elasticache_cache_host = aws_elasticache_cluster.this.cache_nodes[0].address
     airflow_core_dag_concurrency          = var.airflow_core_dag_concurrency
     airflow_core_worker_concurrency       = var.airflow_core_worker_concurrency
@@ -306,13 +306,14 @@ data "template_file" "worker" {
     rds_password                          = var.rds_password
     rds_db_name                           = local.rds_name
     airflow_core_logging_level            = var.airflow_core_logging_level
-    airflow_smtp_host                     = var.airflow_smtp_host
-    airflow_smtp_port                     = var.airflow_smtp_port
-    airflow_smtp_ssl                      = var.airflow_smtp_smtp_ssl
-    airflow_smtp_starttls                 = var.airflow_smtp_starttls
-    airflow_smtp_user                     = var.airflow_smtp_user
-    airflow_smtp_password                 = var.airflow_smtp_password
-    airflow_smtp_mail_from                = var.airflow_smtp_mail_from
+    airflow_smtp_smtp_host                = var.airflow_smtp_smtp_host
+    airflow_smtp_smtp_starttls            = var.airflow_smtp_smtp_starttls
+    airflow_smtp_smtp_ssl                 = var.airflow_smtp_smtp_smtp_ssl
+    airflow_smtp_smtp_port                = var.airflow_smtp_smtp_port
+    airflow_smtp_smtp_port                = var.airflow_smtp_smtp_port
+    airflow_smtp_smtp_user                = var.airflow_smtp_smtp_user
+    airflow_smtp_smtp_password            = var.airflow_smtp_smtp_password
+    airflow_smtp_smtp_mail_from           = var.airflow_smtp_smtp_mail_from
     airflow_docker_image                  = var.airflow_image
   }
 }

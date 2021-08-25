@@ -62,6 +62,7 @@
         "name": "AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL",
         "value": "${airflow_scheduler_dag_dir_list_interval}"
       }
+
     ],
     "resourceRequirements": null,
     "ulimits": null,

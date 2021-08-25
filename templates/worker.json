@@ -64,31 +64,31 @@
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_HOST",
-        "value": "${airflow_smtp_host}"
+        "value": "${airflow_smtp_smtp_host}"
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_STARTTLS",
-        "value": "${airflow_smtp_starttls}"
+        "value": "${airflow_smtp_smtp_starttls}"
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_SSL",
-        "value": "${airflow_smtp_ssl}"
+        "value": "${airflow_smtp_smtp_ssl}"
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_PORT",
-        "value": "${airflow_smtp_port}"
+        "value": "${airflow_smtp_smtp_port}"
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_USER",
-        "value": "${airflow_smtp_user}"
+        "value": "${airflow_smtp_smtp_user}"
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_PASSWORD",
-        "value": "${airflow_smtp_password}"
+        "value": "${airflow_smtp_smtp_password}"
       },
       {
         "name": "AIRFLOW__SMTP__SMTP_MAIL_FROM",
-        "value": "${airflow_smtp_mail_from}"
+        "value": "${airflow_smtp_smtp_mail_from}"
       }
     ],
     "resourceRequirements": null,
