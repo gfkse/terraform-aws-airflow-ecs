@@ -287,6 +287,11 @@ data "template_file" "scheduler" {
     airflow_core_logging_level              = var.airflow_core_logging_level
     airflow_docker_image                    = var.airflow_image
     airflow_scheduler_dag_dir_list_interval = var.airflow_scheduler_dag_dir_list_interval
+    airflow_scheduler_statsd_on             = var.airflow_scheduler_statsd_on
+    airflow_scheduler_statsd_host           = var.airflow_scheduler_statsd_host
+    airflow_scheduler_statsd_port           = var.airflow_scheduler_statsd_port
+    airflow_scheduler_statsd_prefix         = var.airflow_scheduler_statsd_prefix
+    airflow_scheduler_statsd_allow_list     = var.airflow_scheduler_statsd_allow_list
   }
 }
 

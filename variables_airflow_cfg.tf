@@ -35,6 +35,36 @@ variable "airflow_scheduler_dag_dir_list_interval" {
   default     = "180"
 }
 
+variable "airflow_scheduler_statsd_on" {
+  type        = string
+  description = "Statsd (https://github.com/etsy/statsd) integration settings."
+  default     = "False"
+}
+
+variable "airflow_scheduler_statsd_host" {
+  type        = string
+  description = "Statsd (https://github.com/etsy/statsd) integration settings."
+  default     = "localhost"
+}
+
+variable "airflow_scheduler_statsd_port" {
+  type        = string
+  description = "Statsd (https://github.com/etsy/statsd) integration settings."
+  default     = "8125"
+}
+
+variable "airflow_scheduler_statsd_prefix" {
+  type        = string
+  description = "Statsd (https://github.com/etsy/statsd) integration settings."
+  default     = "airflow"
+}
+
+variable "airflow_scheduler_statsd_allow_list" {
+  type        = string
+  description = "If you want to avoid send all the available metrics to StatsD, you can configure an allow list of prefixes to send only the metrics that start with the elements of the list (e.g: scheduler,executor,dagrun)"
+  default     = ""
+}
+
 variable "airflow_smtp_smtp_host" {
   type        = string
   description = "If you want airflow to send emails on retries, failure, and you want to use the airflow.utils.email.send_email_smtp function, you have to configure an smtp server here."
