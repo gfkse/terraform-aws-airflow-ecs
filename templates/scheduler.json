@@ -61,6 +61,26 @@
       {
         "name": "AIRFLOW__SCHEDULER__DAG_DIR_LIST_INTERVAL",
         "value": "${airflow_scheduler_dag_dir_list_interval}"
+      },
+      {
+        "name": "AIRFLOW__SCHEDULER__STATSD_ON",
+        "value": "${airflow_scheduler_statsd_on}"
+      },
+      {
+        "name": "AIRFLOW__SCHEDULER__STATSD_HOST",
+        "value": "${airflow_scheduler_statsd_host}"
+      },
+      {
+        "name": "AIRFLOW__SCHEDULER__STATSD_PORT",
+        "value": "${airflow_scheduler_statsd_port}"
+      },
+      {
+        "name": "AIRFLOW__SCHEDULER__STATSD_PREFIX",
+        "value": "${airflow_scheduler_statsd_prefix}"
+      },
+      {
+        "name": "AIRFLOW__SCHEDULER__STATSD_ALLOW_LIST",
+        "value": "${airflow_scheduler_statsd_allow_list}"
       }
     ],
     "resourceRequirements": null,
