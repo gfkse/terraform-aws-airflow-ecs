@@ -26,5 +26,6 @@ resource "aws_datasync_task" "dag_sync" {
 
   options {
     bytes_per_second = -1
+    verify_mode      = "ONLY_FILES_TRANSFERRED"
   }
 }
