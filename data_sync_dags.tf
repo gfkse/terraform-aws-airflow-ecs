@@ -25,7 +25,9 @@ resource "aws_datasync_task" "dag_sync" {
   source_location_arn      = aws_datasync_location_s3.dag_source.arn
 
   options {
-    bytes_per_second = -1
-    verify_mode      = "ONLY_FILES_TRANSFERRED"
+    bytes_per_second       = -1
+    transfer_mode          = "ALL"
+    verify_mode            = "ONLY_FILES_TRANSFERRED"
+    preserve_deleted_files = "REMOVE"
   }
 }
