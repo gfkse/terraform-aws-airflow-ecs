@@ -26,7 +26,6 @@ resource "aws_datasync_task" "dag_sync" {
 
   options {
     bytes_per_second       = -1
-    transfer_mode          = "ALL"
     verify_mode            = "ONLY_FILES_TRANSFERRED"
     preserve_deleted_files = "REMOVE"
   }
